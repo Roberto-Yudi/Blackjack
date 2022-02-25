@@ -19,6 +19,11 @@ def deal():
     player_hand.append(random.choices(deck, k=2))
     dealer_hand.append(random.choices(deck, k=2))
 
+def show_hand():
+    print(f'Dealer Hand:[{dealer_hand[0]}, ?]')
+    print(f'Your Hand:{player_hand}')
+    print(f'total:{total(player_hand)}')
+
 def hit(who):
     who.append(random.choice(deck))
 
@@ -58,7 +63,7 @@ def check_winner():
     # Dealer have to hit
     while total(dealer_hand) < 17:
         hit(dealer_hand)
-        print(f'Hit!,{total(dealer_hand)}')
+        print(f'Dealer Hit!,{total(dealer_hand)}')
         if total(dealer_hand) > 21:
             print('Dealer Busted!\nYou Win')
 
@@ -73,3 +78,4 @@ def check_winner():
 
 
 # game loop
+
