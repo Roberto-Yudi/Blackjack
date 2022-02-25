@@ -22,7 +22,7 @@ def hit(who, times):
         card = random.choice(deck)
         deck.remove(card)
         who.append(card)
-
+    
 
 def show_hand():
     print(f'Dealer Hand:{dealer_hand[0]}, ?')
@@ -47,10 +47,11 @@ def total(who):
 
 # check for the winner
 
-def check_before_reveal():
+def check():
     if total(player_hand) > 21:
         print('You Busted!')
-        return
+        return False
+    return True
 
 def check_winner():
     # BLack Jacks
@@ -84,4 +85,10 @@ while switch:
     hit(player_hand, 2)
     hit(dealer_hand, 2)
     show_hand()
+    next_move = input('1: Hit\n2: Stay\n')
+    if next_move == '1':
+        hit(player_hand, 1)
+        print(f'total:{total(player_hand)}')
+        check()
+    
     switch = False
