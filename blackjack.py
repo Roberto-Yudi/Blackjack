@@ -1,4 +1,5 @@
 import random
+switch = True
 
 # deck/player/dealer hand
 deck = []
@@ -9,23 +10,25 @@ for x in range(2,11):
 for x in ['A','J','Q','K']:
     for y in range(4):
         deck.append(x)
-print(deck)
 
 player_hand = []
 dealer_hand = []
 
 # deal the cards
-def deal():
-    player_hand.append(random.choices(deck, k=2))
-    dealer_hand.append(random.choices(deck, k=2))
+
+def hit(who, times):
+
+    for _ in range(times):
+        card = random.choice(deck)
+        deck.remove(card)
+        who.append(card)
+
 
 def show_hand():
-    print(f'Dealer Hand:[{dealer_hand[0]}, ?]')
+    print(f'Dealer Hand:{dealer_hand[0]}, ?')
     print(f'Your Hand:{player_hand}')
     print(f'total:{total(player_hand)}')
 
-def hit(who):
-    who.append(random.choice(deck))
 
 # calculate the total of each hand
 def total(who):
@@ -48,7 +51,6 @@ def check_before_reveal():
     if total(player_hand) > 21:
         print('You Busted!')
         return
-
 
 def check_winner():
     # BLack Jacks
@@ -78,4 +80,8 @@ def check_winner():
 
 
 # game loop
-
+while switch:
+    hit(player_hand, 2)
+    hit(dealer_hand, 2)
+    show_hand()
+    switch = False
