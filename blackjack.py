@@ -1,4 +1,6 @@
 import random
+import time 
+
 switch = True
 
 # deck/player/dealer hand
@@ -24,12 +26,6 @@ def hit(who, times):
         who.append(card)
     
 
-def show_hand():
-    print(f'Dealer Hand:{dealer_hand[0]}, ?')
-    print(f'Your Hand:{player_hand}')
-    print(f'total:{total(player_hand)}')
-
-
 # calculate the total of each hand
 def total(who):
     total = 0
@@ -50,25 +46,21 @@ def total(who):
 def check():
     if total(player_hand) > 21:
         print('You Busted!')
-        return False
-    return True
+        switch = False
+    return
 
 def check_winner():
     # BLack Jacks
     if total(player_hand) == 21:
         if total(dealer_hand) == 21:
             print('BlackJack Tie!')
-            return
+            switch = False
         else:
             print('BlackJack, You Win!')
-            return
+            switch = False
 
     # Dealer have to hit
-    while total(dealer_hand) < 17:
-        hit(dealer_hand)
-        print(f'Dealer Hit!,{total(dealer_hand)}')
-        if total(dealer_hand) > 21:
-            print('Dealer Busted!\nYou Win')
+
 
     # Tied game
     if total(player_hand) == total(dealer_hand):
@@ -84,11 +76,53 @@ def check_winner():
 while switch:
     hit(player_hand, 2)
     hit(dealer_hand, 2)
-    show_hand()
-    next_move = input('1: Hit\n2: Stay\n')
-    if next_move == '1':
-        hit(player_hand, 1)
-        print(f'total:{total(player_hand)}')
-        check()
     
-    switch = False
+    print(f'Dealer Hand:{dealer_hand[0]}, ?')
+    time.sleep(2)
+    print(f'Your Hand:{player_hand}')
+    print(f'Total:{total(player_hand)}')
+
+    hit_cycle = True
+
+    while hit_cycle:
+        time.sleep(2)
+        next_move = input('1: Hit\n2: Stay\n')
+        if next_move == '1':
+            hit(player_hand, 1)
+
+            # Show Hand
+            print(f'Your Hand:{player_hand}')
+            print(f'Total:{total(player_hand)}')
+
+            # Check
+            if total(player_hand) > 21:
+                print('You Busted')
+                switch = False
+        elif next_move == '2':
+            hit_cycle = False
+        else:
+            print('Invalid Input.')
+    
+    print(f'Dealer Hand:{dealer_hand}')
+    print(f'Total:{total(dealer_hand)}')
+
+    while total(dealer_hand) < 17:
+        hit(dealer_hand, 1)
+        print('Dealer Hit!')
+        print(f'Dealer Hand:{dealer_hand}')
+        print(f'Total:{total(dealer_hand)}')
+        time.sleep(2)
+        if total(dealer_hand) > 21:
+            print('Dealer Busted!\nYou Win')
+            switch = False
+
+    if total(player_hand) > total(dealer_hand):
+        print('You Win!')
+        switch = False
+    elif total(player_hand) == total(dealer_hand):
+        print('Tie!')
+        switch = False
+    else:
+        print('You Lose!')
+        switch = False
+
