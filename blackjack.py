@@ -70,6 +70,24 @@ def show_hand(dealer=False,hide=False):
     else:
         print(f'Your Hand:{player_hand} Total:{total(player_hand)}')
 
+def player_hit_cycle():
+    hit_cycle = True
+    while hit_cycle:
+        next_move = input('1: Hit\n2: Stay\n')
+        if next_move == '1':
+            hit(player_hand, 1)
+
+            show_hand()
+
+            # Check
+            if total(player_hand) > 21:
+                print('You Busted!, Dealer wins.')
+                return
+        elif next_move == '2':
+            hit_cycle = False
+        else:
+            print('Invalid Input.')
+            return
 
 # Game loop
 def play():
