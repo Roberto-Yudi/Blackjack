@@ -1,5 +1,6 @@
 import random
 import time 
+from unittest.mock import MagicMock
 
 switch = True
 
@@ -43,11 +44,22 @@ def total(who):
 
 # check for the winner
 
-def check():
-    pass
+def check(dealer=False):
+    if dealer:
+        if total(dealer_hand) > 21:
+            print('Dealer Busted, You Win!')
+            return
+    if total(player_hand) > 21:
+            print('You Busted!, Dealer Win.')
+            return
+    if total(player_hand) == 21:
+        if total(dealer_hand) == 21:
+            print(f'Dealer Hand:{dealer_hand}')
+            print('BlackJack Tie!')
+            return 
+        print('BlackJack!, You Win!')
+        return 
 
-def check_winner():
-    pass
 
 def show_hand(dealer=False,hide=False):
     if dealer:
@@ -89,7 +101,7 @@ def play():
 
             # Check
             if total(player_hand) > 21:
-                print('You Busted')
+                print('You Busted!, Dealer wins.')
                 return
         elif next_move == '2':
             hit_cycle = False
@@ -105,7 +117,7 @@ def play():
         show_hand(dealer=True)
         time.sleep(2)
         if total(dealer_hand) > 21:
-            print('Dealer Busted!\nYou Win')
+            print('Dealer Busted, You Win!')
             return
 
     if total(player_hand) > total(dealer_hand):
@@ -115,10 +127,10 @@ def play():
         print('Tie!')
         return
     else:
-        print('You Lose!')
+        print('Dealer Wins.')
         return
-play()
 
+#play()
 '''
 CodeCoach
 
