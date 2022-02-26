@@ -44,36 +44,14 @@ def total(who):
 # check for the winner
 
 def check():
-    if total(player_hand) > 21:
-        print('You Busted!')
-        switch = False
-    return
+    pass
 
 def check_winner():
-    # BLack Jacks
-    if total(player_hand) == 21:
-        if total(dealer_hand) == 21:
-            print('BlackJack Tie!')
-            switch = False
-        else:
-            print('BlackJack, You Win!')
-            switch = False
-
-    # Dealer have to hit
+    pass
 
 
-    # Tied game
-    if total(player_hand) == total(dealer_hand):
-        print('Tie!')
-        return
-
-    #Player win
-    if player_hand > dealer_hand and player_hand < 22:
-        print(f'You win!')
-
-
-# game loop
-while switch:
+# Game loop
+def play():
     hit(player_hand, 2)
     hit(dealer_hand, 2)
     
@@ -82,8 +60,18 @@ while switch:
     print(f'Your Hand:{player_hand}')
     print(f'Total:{total(player_hand)}')
 
+    #BlackJack
+    if total(player_hand) == 21:
+        if total(dealer_hand) == 21:
+            print(f'Dealer Hand:{dealer_hand}')
+            print('BlackJack Tie!')
+            return 
+        print('BlackJack!, You Win!')
+        return 
+
     hit_cycle = True
 
+    #Player hit cycle
     while hit_cycle:
         time.sleep(2)
         next_move = input('1: Hit\n2: Stay\n')
@@ -97,7 +85,7 @@ while switch:
             # Check
             if total(player_hand) > 21:
                 print('You Busted')
-                switch = False
+                return
         elif next_move == '2':
             hit_cycle = False
         else:
@@ -106,6 +94,7 @@ while switch:
     print(f'Dealer Hand:{dealer_hand}')
     print(f'Total:{total(dealer_hand)}')
 
+    # Dealer Hit Cycle
     while total(dealer_hand) < 17:
         hit(dealer_hand, 1)
         print('Dealer Hit!')
@@ -114,15 +103,42 @@ while switch:
         time.sleep(2)
         if total(dealer_hand) > 21:
             print('Dealer Busted!\nYou Win')
-            switch = False
+            return
 
     if total(player_hand) > total(dealer_hand):
         print('You Win!')
-        switch = False
+        return
     elif total(player_hand) == total(dealer_hand):
         print('Tie!')
-        switch = False
+        return
     else:
         print('You Lose!')
-        switch = False
+        return
+play()
 
+'''
+CodeCoach
+
+for _ in range(2):
+    dealCard(dealerHand)
+    dealCard(playerHand)
+
+while playerIn or dealerIn:
+    print(f'{dealer_hand}')
+    print(f'player_hand')   
+    if playerIn:
+        stayOrHit = input('1:Hit/n2:Stay')
+    if total(dealerHand) > 16:
+        dealerIn = False
+    else:
+        dealCard(dealerHand)
+    if stayOrHit == '2':
+        playerIn = False
+    if total(playerHand) >= 21:
+        break
+    elif total(dealerHand) >= 21:
+        break
+
+if ....
+
+'''
