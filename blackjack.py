@@ -49,16 +49,24 @@ def check():
 def check_winner():
     pass
 
+def show_hand(dealer=False,hide=False):
+    if dealer:
+        if hide:
+            print(f'Dealer Hand:{dealer_hand[0]}, ?')
+            return 
+        print(f'Dealer Hand:{dealer_hand} Total:{total(dealer_hand)}')
+    else:
+        print(f'Your Hand:{player_hand} Total:{total(player_hand)}')
+
 
 # Game loop
 def play():
     hit(player_hand, 2)
     hit(dealer_hand, 2)
     
-    print(f'Dealer Hand:{dealer_hand[0]}, ?')
+    show_hand(dealer=True,hide=True)
     time.sleep(2)
-    print(f'Your Hand:{player_hand}')
-    print(f'Total:{total(player_hand)}')
+    show_hand()
 
     #BlackJack
     if total(player_hand) == 21:
@@ -73,14 +81,11 @@ def play():
 
     #Player hit cycle
     while hit_cycle:
-        time.sleep(2)
         next_move = input('1: Hit\n2: Stay\n')
         if next_move == '1':
             hit(player_hand, 1)
 
-            # Show Hand
-            print(f'Your Hand:{player_hand}')
-            print(f'Total:{total(player_hand)}')
+            show_hand()
 
             # Check
             if total(player_hand) > 21:
@@ -91,15 +96,13 @@ def play():
         else:
             print('Invalid Input.')
     
-    print(f'Dealer Hand:{dealer_hand}')
-    print(f'Total:{total(dealer_hand)}')
+    show_hand(dealer=True)
 
     # Dealer Hit Cycle
     while total(dealer_hand) < 17:
         hit(dealer_hand, 1)
         print('Dealer Hit!')
-        print(f'Dealer Hand:{dealer_hand}')
-        print(f'Total:{total(dealer_hand)}')
+        show_hand(dealer=True)
         time.sleep(2)
         if total(dealer_hand) > 21:
             print('Dealer Busted!\nYou Win')
