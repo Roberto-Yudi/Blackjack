@@ -111,7 +111,6 @@ while player_credits > 0:
         global player_credits
         print(f'You have {player_credits} points')
 
-        #print('Shuffling Deck') #animation
         hit(player_hand, 2)
         hit(dealer_hand, 2)
 
@@ -139,9 +138,43 @@ while player_credits > 0:
                 print(f'Dealer Hand:{dealer_hand}')
                 print('BlackJack Tie!')
                 return 
-            print('BlackJack!, You Win!')
-            calculate_win(player_credits,bet,bj=True)
+            print('----BlackJack!, You Win!----')
+            print(f'You earned: {bet * 2.5}')
+            player_credits += bet* 1.5
+            print(f'credits:{player_credits}')
+            
             return 
+
+        #Double Down
+        if total(player_hand) in range(9,12):
+            while True:
+                print('Double Down?')
+                double = input('1:yes \n2:no\n')
+                if double == '1':
+                    if player_credits < bet:
+                        print('You dont have enough credits.')
+                        break
+                    else:
+                        player_credits -= bet
+                        print('You doubled your bet.')
+                        hit(player_hand,1)
+                        time.sleep(2)
+                        show_hand()
+
+                        if total(player_hand) > 21:
+                            print('----You Busted on a 2x bet!, Dealer wins.----')
+                            player_credits -= bet*4
+                            return
+                        else:
+                            print('----You won a 2x bet!----')
+                            player_credits += bet*4
+                            return 
+                        
+                elif double == '2':
+                    break
+                else:
+                    print('Invalid input.')
+                    
 
         #Player hit cycle
         hit_cycle = True
@@ -154,14 +187,14 @@ while player_credits > 0:
 
                 # Bust Check
                 if total(player_hand) > 21:
-                    print('You Busted!, Dealer wins.')
+                    print('----You Busted!, Dealer wins.----')
                     player_credits -= bet
                     return
             elif next_move == '2':
                 hit_cycle = False
             else:
                 print('Invalid Input.')
-        
+
         show_hand(dealer=True)
 
         # Dealer Hit Cycle
@@ -173,7 +206,7 @@ while player_credits > 0:
 
             # Bust Check
             if total(dealer_hand) > 21:
-                print('Dealer Busted, You Win!')
+                print('----Dealer Busted, You Win!----')
                 print(f'You earned: {bet * 2}')
                 player_credits += bet
                 print(f'credits:{player_credits}')
@@ -182,17 +215,20 @@ while player_credits > 0:
 
         # Final Check
         if total(player_hand) > total(dealer_hand):
-            print('You Win!')
+            time.sleep(2)
+            print('----You Win!----')
             print(f'You earned: {bet * 2}')
             player_credits += bet
             print(f'credits:{player_credits}')
             
             return
         elif total(player_hand) == total(dealer_hand):
-            print('Tie!')
+            time.sleep(2)
+            print('----Tie!----')
             return
         else:
-            print('Dealer Wins.')
+            time.sleep(2)
+            print('----Dealer Wins.----')
             player_credits -= bet
             return
     play()
