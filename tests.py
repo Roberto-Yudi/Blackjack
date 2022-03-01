@@ -6,9 +6,9 @@ from io import StringIO
 
 
 class TestGame(TestCase):
-    @mock.patch('blackjack.play')
+    @mock.patch('blackjack.game')
     def test_game_starts(self, mock_game):
-        blackjack.play()
+        blackjack.game()
         mock_game.assert_called()
 
     def runTest(self, given_answer, expected_out):
@@ -17,12 +17,8 @@ class TestGame(TestCase):
             self.assertEqual(fake_out.getvalue().strip(), expected_out)
 
     def test_invalid_input(self):
-        self.runTest('11', 'Invalid Input.')   
+        self.runTest('11', 'Invalid Input.')
 
-
-
-    
-    
 
 if __name__ == '__main__':
     unittest.main()
