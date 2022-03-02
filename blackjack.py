@@ -80,19 +80,24 @@ def show_hand(dealer=False, hide=False):
 #         print('BlackJack!, You Win!')
 #         return
 
-player_credits = 100
+def generate_deck():
+    deck = []
+    for x in range(2, 11):
+        for _ in range(4):
+            deck.append(x)
+
+    for x in ['A', 'J', 'Q', 'K']:
+        for _ in range(4):
+            deck.append(x)
+    return deck
+
+
+player_credits = 100.5
 bet = 0
 
 # Game loop
 while player_credits > 0:
-    deck = []
-    for x in range(2, 11):
-        for y in range(4):
-            deck.append(x)
-
-    for x in ['A', 'J', 'Q', 'K']:
-        for y in range(4):
-            deck.append(x)
+    deck = generate_deck()
 
     player_hand = []
     dealer_hand = []
@@ -101,20 +106,20 @@ while player_credits > 0:
         global player_credits
         print(f'You have {player_credits} points')
 
+        # Deal
         hit(player_hand, 2)
         hit(dealer_hand, 2)
 
         # Bet
-        waiting_bet = True
-        while waiting_bet:
+        while True:
             try:
-                bet = int(input("Place your bet\n"))
+                bet = float(input("Place your bet\n"))
                 if bet <= 0:
                     print('You can\'t bet nothing.🙃')
                 elif bet > player_credits:
                     print('You don\'t have enough credits.😐')
                 else:
-                    waiting_bet = False
+                    break
             except ValueError:
                 print('Invalid input.🚫')
 
@@ -129,7 +134,7 @@ while player_credits > 0:
                 print('BlackJack Tie!🤯')
                 return
             print('---- ♠BlackJack!, You Win!🍀 ----')
-            print(f'You earned: {bet * 2.5}')
+            print(f'You earned: {bet * 1.5}')
             player_credits += bet * 1.5
 
             return
@@ -205,16 +210,15 @@ while player_credits > 0:
             # Bust Check
             if total(dealer_hand) > 21:
                 print('----Dealer Busted, You Win!😂 ----')
-                print(f'You earned: {bet * 2}')
+                print(f'You earned: {bet}')
                 player_credits += bet
 
                 return
-
         # Final Check
         if total(player_hand) > total(dealer_hand):
             time.sleep(2)
             print('----You have the best hand!, You Win.😁 ----')
-            print(f'You earned: {bet * 2}')
+            print(f'You earned: {bet}')
             player_credits += bet
 
             return
@@ -229,6 +233,9 @@ while player_credits > 0:
             return
     play()
 '''
+turn_check(final_check())
+
+
 CodeCoach
 
 for _ in range(2):
