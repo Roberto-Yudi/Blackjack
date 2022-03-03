@@ -1,9 +1,10 @@
 import random
 import time
 
+# Helper functions
+
 
 def hit(who, times):
-
     for _ in range(times):
         card = random.choice(deck)
         deck.remove(card)
@@ -35,51 +36,6 @@ def show_hand(dealer=False, hide=False):
         print(f'Your Hand:{player_hand} Total:{total(player_hand)}')
 
 
-# def player_hit_cycle():
-#     hit_cycle = True
-#     while hit_cycle:
-#         next_move = input('1: Hit\n2: Stay\n')
-#         if next_move == '1':
-#             hit(player_hand, 1)
-
-#             show_hand()
-
-#             # Check
-#             if total(player_hand) > 21:
-#                 print('You Busted!, Dealer wins.')
-#                 return
-#         elif next_move == '2':
-#             hit_cycle = False
-#         else:
-#             print('Invalid Input.')
-#             return
-
-# def calculate_win(player_credits,bet, bj=False):
-#     if bj:
-#         print(f'You earned: {bet * 2.5}')
-#         player_credits += bet* 1.5
-#         print(f'credits:{player_credits}')
-#     else:
-#         print(f'You earned: {bet * 2}')
-#         player_credits += bet
-#         print(f'credits:{player_credits}')
-
-# def check(dealer=False):
-#     if dealer:
-#         if total(dealer_hand) > 21:
-#             print('Dealer Busted, You Win!')
-#             return
-#     if total(player_hand) > 21:
-#             print('You Busted!, Dealer Win.')
-#             return
-#     if total(player_hand) == 21:
-#         if total(dealer_hand) == 21:
-#             print(f'Dealer Hand:{dealer_hand}')
-#             print('BlackJack Tie!')
-#             return
-#         print('BlackJack!, You Win!')
-#         return
-
 def generate_deck():
     deck = []
     for x in range(2, 11):
@@ -92,7 +48,7 @@ def generate_deck():
     return deck
 
 
-player_credits = 100.5
+player_credits = 100
 bet = 0
 
 # Game loop
@@ -180,8 +136,7 @@ while player_credits > 0:
                     print('Invalid input.🚫')
 
         # Player hit cycle
-        hit_cycle = True
-        while hit_cycle:
+        while True:
             next_move = input('🤔\n1: Hit\n2: Stay\n')
             if next_move == '1':
                 hit(player_hand, 1)
@@ -194,7 +149,7 @@ while player_credits > 0:
                     player_credits -= bet
                     return
             elif next_move == '2':
-                hit_cycle = False
+                break
             else:
                 print('Invalid Input.🚫')
 
@@ -232,32 +187,3 @@ while player_credits > 0:
             player_credits -= bet
             return
     play()
-'''
-turn_check(final_check())
-
-
-CodeCoach
-
-for _ in range(2):
-    dealCard(dealerHand)
-    dealCard(playerHand)
-
-while playerIn or dealerIn:
-    print(f'{dealer_hand}')
-    print(f'player_hand')
-    if playerIn:
-        stayOrHit = input('1:Hit/n2:Stay')
-    if total(dealerHand) > 16:
-        dealerIn = False
-    else:
-        dealCard(dealerHand)
-    if stayOrHit == '2':
-        playerIn = False
-    if total(playerHand) >= 21:
-        break
-    elif total(dealerHand) >= 21:
-        break
-
-if ....
-
-'''

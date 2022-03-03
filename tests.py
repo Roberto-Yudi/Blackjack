@@ -6,9 +6,9 @@ from io import StringIO
 
 
 class TestGame(TestCase):
-    @mock.patch('blackjack.game')
+    @mock.patch('blackjack.play')
     def test_game_starts(self, mock_game):
-        blackjack.game()
+        blackjack.play()
         mock_game.assert_called()
 
     def runTest(self, given_answer, expected_out):
